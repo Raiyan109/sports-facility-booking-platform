@@ -89,7 +89,15 @@ const getBookingsByUser = catchAsync(async (req, res) => {
 });
 
 const cancelBooking = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const result = await BookingServices.cancelBooking(id);
 
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: 'Booking cancelled successfully',
+        data: result,
+    });
 });
 
 export const BookingControllers = {

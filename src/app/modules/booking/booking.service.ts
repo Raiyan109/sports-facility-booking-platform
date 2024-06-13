@@ -29,7 +29,14 @@ const getBookingsByUserFromDB = async (userId: string) => {
 
 
 const cancelBooking = async (id: string) => {
-
+    const result = await BookingModel.findByIdAndUpdate(
+        id,
+        { isBooked: "canceled" },
+        {
+            new: true,
+        },
+    ).populate('facility');
+    return result;
 };
 
 
