@@ -1,7 +1,8 @@
 export type TFacility = {
     name: string;
-    desc: string;
+    description: string;
     pricePerHour: number;
     location: string;
-    isDeleted: boolean;
-} 
+    isDeleted?: boolean;
+}
+

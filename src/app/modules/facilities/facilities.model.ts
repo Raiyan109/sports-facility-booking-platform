@@ -6,7 +6,7 @@ const facilitySchema = new Schema<TFacility>({
         type: String,
         required: true
     },
-    desc: {
+    description: {
         type: String,
         required: true
     },
@@ -20,7 +20,8 @@ const facilitySchema = new Schema<TFacility>({
     },
     isDeleted: {
         type: Boolean,
-        required: true
+        required: true,
+        default: false
     }
 }, { timestamps: true })
 
