@@ -14,6 +14,25 @@ const signUp = catchAsync(async (req, res) => {
     });
 })
 
+const loginUser = catchAsync(async (req, res) => {
+    const result = await UserServices.login(req.body);
+    const { accessToken, user } = result;
+
+    // res.cookie('refreshToken', refreshToken, {
+    //   secure: config.NODE_ENV === 'production',
+    //   httpOnly: true,
+    // });
+
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: 'User logged in successfully',
+        token: accessToken,
+        data: user,
+    });
+});
+
 export const UserControllers = {
-    signUp
+    signUp,
+    loginUser
 }
