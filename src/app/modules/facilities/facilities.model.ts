@@ -4,11 +4,13 @@ import { TFacility } from "./facilities.interface";
 const facilitySchema = new Schema<TFacility>({
     name: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     description: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     pricePerHour: {
         type: Number,

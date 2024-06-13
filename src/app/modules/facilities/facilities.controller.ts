@@ -5,7 +5,9 @@ import { FacilityModel } from "./facilities.model";
 import { FacilityServices } from "./facilities.service";
 
 const createFacility = catchAsync(async (req, res) => {
+
     const result = await FacilityServices.createFacilityIntoDB(req.body);
+    console.log(req.user, 'from create facility');
 
     sendResponse(res, {
         success: true,
