@@ -9,9 +9,11 @@ import { FacilityModel } from "../facilities/facilities.model";
 const createBooking = catchAsync(async (req, res) => {
     const { date, startTime, endTime, user, facility, payableAmount, isBooked } = req.body;
 
+    // Get the price of current facility
     const facilityPrice = await FacilityModel.findById(facility)
     const pricePerHour = facilityPrice?.pricePerHour
 
+    // Function for time difference
     function diffTime(startTime: string, endTime: string) {
         var hour1 = startTime.split(':')[0];
         var hour2 = endTime.split(':')[0];
@@ -38,6 +40,7 @@ const createBooking = catchAsync(async (req, res) => {
     const mappedDiff = diff[0] - diff[1]
     console.log(mappedDiff, 'from diff');
 
+    // Retrieve payable amount
     const currPayableAmount = mappedDiff * pricePerHour
     console.log(currPayableAmount);
 
@@ -72,7 +75,17 @@ const getAllBookings = catchAsync(async (req, res) => {
 });
 
 const getBookingsByUser = catchAsync(async (req, res) => {
+    const userId = req.user?.userId?._id
+    const result = await BookingServices.getBookingsByUserFromDB(userId);
 
+
+
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: 'Bookings retrieved successfully',
+        data: result,
+    });
 });
 
 const cancelBooking = catchAsync(async (req, res) => {

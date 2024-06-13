@@ -14,12 +14,15 @@ const createBookingIntoDB = async (booking: TBooking) => {
 }
 
 const getAllBookingsFromDB = async () => {
-    const result = await BookingModel.find()
+    const result = await BookingModel.find().populate('user').populate('facility')
     return result;
 };
 
-const getBookingsByUserFromDB = async () => {
-    const result = await BookingModel.find()
+const getBookingsByUserFromDB = async (userId: string) => {
+    console.log(userId);
+
+    const result = await BookingModel.find({ user: userId }).populate('facility')
+    console.log(result);
     return result;
 };
 
