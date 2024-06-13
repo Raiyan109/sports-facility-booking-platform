@@ -2,17 +2,60 @@ import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import { BookingServices } from "./booking.service";
+import { JwtPayload } from "jsonwebtoken";
+import { FacilityModel } from "../facilities/facilities.model";
 
 
 const createBooking = catchAsync(async (req, res) => {
+    const { date, startTime, endTime, user, facility, payableAmount, isBooked } = req.body;
 
-    const result = await BookingServices.createBookingIntoDB(req.body);
-    console.log(req.user, 'from create facility');
+    const facilityPrice = await FacilityModel.findById(facility)
+    const pricePerHour = facilityPrice?.pricePerHour
+
+    function diffTime(startTime: string, endTime: string) {
+        var hour1 = startTime.split(':')[0];
+        var hour2 = endTime.split(':')[0];
+        var min1 = startTime.split(':')[1];
+        var min2 = endTime.split(':')[1];
+
+        var diff_hour = hour2 - hour1;
+        var diff_min = min2 - min1;
+        if (diff_hour < 0) {
+            diff_hour += 24;
+        }
+        if (diff_min < 0) {
+            diff_min += 60;
+            diff_hour--;
+        } else if (diff_min >= 60) {
+            diff_min -= 60;
+            diff_hour++;
+        }
+        return [diff_hour, diff_min]
+
+    }
+
+    const diff = diffTime(startTime, endTime)
+    const mappedDiff = diff[0] - diff[1]
+    console.log(mappedDiff, 'from diff');
+
+    const currPayableAmount = mappedDiff * pricePerHour
+    console.log(currPayableAmount);
+
+
+    const result = await BookingServices.createBookingIntoDB({
+        date,
+        startTime,
+        endTime,
+        user: req.user?.userId?._id,
+        facility,
+        payableAmount: currPayableAmount,
+        isBooked
+    });
 
     sendResponse(res, {
         success: true,
         statusCode: httpStatus.OK,
-        message: 'Facility added successfully',
+        message: 'Booking created successfully',
         data: result,
     });
 });
@@ -23,7 +66,7 @@ const getAllBookings = catchAsync(async (req, res) => {
     sendResponse(res, {
         success: true,
         statusCode: httpStatus.OK,
-        message: 'Facilities retrieved successfully',
+        message: 'Bookings retrieved successfully',
         data: result,
     });
 });

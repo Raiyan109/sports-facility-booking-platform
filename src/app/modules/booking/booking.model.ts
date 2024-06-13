@@ -18,7 +18,7 @@ const bookingSchema = new Schema<TBooking>({
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User',
-        required: true
+        // required: true
     },
     facility: {
         type: Schema.Types.ObjectId,
@@ -27,12 +27,14 @@ const bookingSchema = new Schema<TBooking>({
     },
     payableAmount: {
         type: Number,
-        required: true
+        default: 90,
+        // required: true
     },
     isBooked: {
         type: String,
         enum: ['confirmed', 'unconfirmed', 'canceled'],
-        required: true
+        default: 'confirmed',
+        // required: true
     }
 })
 

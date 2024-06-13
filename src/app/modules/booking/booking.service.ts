@@ -5,10 +5,10 @@ import { BookingModel } from "./booking.model";
 
 
 const createBookingIntoDB = async (booking: TBooking) => {
-    const isFacilityExists = await BookingModel.findOne({ booking })
-    if (isFacilityExists) {
-        throw new AppError(httpStatus.CONFLICT, 'This facility is already exists!');
-    }
+    // const isFacilityExists = await BookingModel.findOne({ booking })
+    // if (isFacilityExists) {
+    //     throw new AppError(httpStatus.CONFLICT, 'This facility is already exists!');
+    // }
     const result = await BookingModel.create(booking)
     return result
 }
