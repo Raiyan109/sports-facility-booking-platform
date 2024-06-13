@@ -25,6 +25,6 @@ const facilitySchema = new Schema<TFacility>({
         required: true,
         default: false
     }
-}, { timestamps: true })
+})
 
 export const FacilityModel = model<TFacility>('Facility', facilitySchema)

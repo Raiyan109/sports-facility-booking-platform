@@ -12,6 +12,50 @@ const createFacilityIntoDB = async (facility: TFacility) => {
     return result
 }
 
+const getAllFacilitiesFromDB = async () => {
+    const result = await FacilityModel.find()
+    return result;
+};
+
+const updateFacilityIntoDB = async (id: string, payload: Partial<TFacility>) => {
+    try {
+        const updatedFacilityInfo = await FacilityModel.findByIdAndUpdate(
+            id,
+            payload,
+            {
+                new: true,
+                runValidators: true,
+                //   session,
+            },
+        );
+
+        if (!updatedFacilityInfo) {
+            throw new AppError(httpStatus.BAD_REQUEST, 'Failed to update facility');
+        }
+
+        return updateFacilityIntoDB;
+    } catch (err) {
+        console.log(err);
+
+        throw new AppError(httpStatus.BAD_REQUEST, 'Failed to update facility');
+    }
+};
+
+const deleteFacilityFromDB = async (id: string) => {
+    const result = await FacilityModel.findByIdAndUpdate(
+        id,
+        { isDeleted: true },
+        {
+            new: true,
+        },
+    );
+    return result;
+};
+
+
 export const FacilityServices = {
     createFacilityIntoDB,
+    getAllFacilitiesFromDB,
+    updateFacilityIntoDB,
+    deleteFacilityFromDB
 }

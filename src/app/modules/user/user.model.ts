@@ -28,7 +28,7 @@ const userSchema = new Schema<TUser, UserModel>({
         type: String,
         required: true
     },
-}, { timestamps: true })
+})
 
 userSchema.pre('save', async function (next) {
     // eslint-disable-next-line @typescript-eslint/no-this-alias

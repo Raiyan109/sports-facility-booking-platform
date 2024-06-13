@@ -34,6 +34,6 @@ const bookingSchema = new Schema<TBooking>({
         enum: ['confirmed', 'unconfirmed', 'canceled'],
         required: true
     }
-}, { timestamps: true })
+})
 
 export const BookingModel = model<TBooking>('Booking', bookingSchema)

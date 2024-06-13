@@ -17,6 +17,44 @@ const createFacility = catchAsync(async (req, res) => {
     });
 });
 
+const getAllFacilities = catchAsync(async (req, res) => {
+    const result = await FacilityServices.getAllFacilitiesFromDB();
+
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: 'Facilities retrieved successfully',
+        data: result,
+    });
+});
+
+const updateFacility = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const result = await FacilityServices.updateFacilityIntoDB(id, req.body);
+
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: 'Facility updated successfully',
+        data: result,
+    });
+});
+
+const deleteFacility = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const result = await FacilityServices.deleteFacilityFromDB(id);
+
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: 'Facility deleted successfully',
+        data: result,
+    });
+});
+
 export const FacilityControllers = {
-    createFacility
+    createFacility,
+    getAllFacilities,
+    updateFacility,
+    deleteFacility
 }
