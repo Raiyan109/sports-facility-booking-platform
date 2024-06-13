@@ -9,4 +9,5 @@ export default {
     bcrypt_salt_rounds: process.env.BCRYPT_SALT_ROUNDS,
     jwt_secret: process.env.JWT_SECRET,
     jwt_secret_expires_in: process.env.JWT_TOKEN_EXPIRES_IN,
+    NODE_ENV: process.env.NODE_ENV
 };
