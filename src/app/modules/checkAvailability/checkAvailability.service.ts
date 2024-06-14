@@ -1,10 +1,10 @@
+import { FilterQuery } from "mongoose";
 import { BookingModel } from "../booking/booking.model";
-import { totalAvailableTimes } from "./checkAvailability.utils";
+import { TSchedule } from "../booking/booking.interface";
 
-const checkAvailabilityIntoDB = async () => {
-    const check = totalAvailableTimes.map(e => console.log(e)
-    )
-    const result = await BookingModel.find({ date: '2024-06-15' }, { startTime: 1, endTime: 1, _id: 0 })
+const checkAvailabilityIntoDB = async (query: FilterQuery<TSchedule>) => {
+
+    const result = await BookingModel.find(query).select('startTime endTime')
     return result
 };
 

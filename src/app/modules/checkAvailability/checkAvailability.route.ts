@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get(
     '/',
-    auth('admin', 'user'),
+    // auth('admin', 'user'),
     CheckAvailabilityControllers.checkAvailability
 );
 

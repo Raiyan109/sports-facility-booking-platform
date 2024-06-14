@@ -11,7 +11,7 @@ const createBooking = catchAsync(async (req, res) => {
 
     // Get the price of current facility
     const facilityPrice = await FacilityModel.findById(facility)
-    const pricePerHour = facilityPrice?.pricePerHour
+    const pricePerHour: number | undefined = facilityPrice?.pricePerHour
 
     // Function for time difference
     function diffTime(startTime: string, endTime: string) {

@@ -5,7 +5,7 @@ import { TBooking } from "./booking.interface";
 const bookingSchema = new Schema<TBooking>({
     date: {
         type: String,
-        required: true
+        required: true,
     },
     startTime: {
         type: String,
