@@ -2,7 +2,7 @@
 
 This project is a backend implementation for a sports facility booking platform, developed using TypeScript, Express.js, and Mongoose for MongoDB. The platform provides key functionalities such as Error Handling, CRUD operations, Authentication & Authorization, and Transaction & Rollback.
 
-## Live link: 
+## Live link: https://sports-facility-booking-platform-be.vercel.app/
 
 ## Features
 - **Authentication & Role-based Authorization**: The user can sign up and log in and can set his role to 'Admin' or 'User'.
