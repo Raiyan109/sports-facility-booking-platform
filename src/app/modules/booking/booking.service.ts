@@ -2,6 +2,7 @@ import httpStatus from "http-status";
 import AppError from "../../errors/AppError";
 import { TBooking } from "./booking.interface";
 import { BookingModel } from "./booking.model";
+import { hasTimeConflict } from "./booking.utils";
 
 
 const createBookingIntoDB = async (booking: TBooking) => {
@@ -9,8 +10,26 @@ const createBookingIntoDB = async (booking: TBooking) => {
     // if (isFacilityExists) {
     //     throw new AppError(httpStatus.CONFLICT, 'This facility is already exists!');
     // }
+    const { date, endTime, facility, isBooked, startTime, user, payableAmount } = booking
+
+    const timeSchedules = await BookingModel.find({
+        facility,
+        user,
+        date: { $in: date }
+    }).select('date startTime endTime')
+    console.log(timeSchedules);
+
+    const newTimeSchedule = { date, startTime, endTime }
+    if (hasTimeConflict(timeSchedules, newTimeSchedule)) {
+        throw new AppError(
+            httpStatus.CONFLICT,
+            `This facility is not available to book at that time ! Choose other time or date`,
+        );
+    }
+
     const result = await BookingModel.create(booking)
     return result
+    // return null
 }
 
 const getAllBookingsFromDB = async () => {
