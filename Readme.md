@@ -28,8 +28,9 @@ This project is a backend implementation for a sports facility booking platform,
 ## How to set up and use the application
 
 - **Installation**
+Clone the repository
 ```javascript
-Clone the repository using git clone https://github.com/Raiyan109/sports-facility-booking-platform.git
+git clone https://github.com/Raiyan109/sports-facility-booking-platform.git
 
 ```
  - **Usage**: 
