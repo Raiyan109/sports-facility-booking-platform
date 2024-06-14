@@ -17,7 +17,6 @@ const createBookingIntoDB = async (booking: TBooking) => {
         user,
         date: { $in: date }
     }).select('date startTime endTime')
-    console.log(timeSchedules);
 
     const newTimeSchedule = { date, startTime, endTime }
     if (hasTimeConflict(timeSchedules, newTimeSchedule)) {
@@ -38,10 +37,8 @@ const getAllBookingsFromDB = async () => {
 };
 
 const getBookingsByUserFromDB = async (userId: string) => {
-    console.log(userId);
 
     const result = await BookingModel.find({ user: userId }).populate('facility')
-    console.log(result);
     return result;
 };
 

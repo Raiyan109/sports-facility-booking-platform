@@ -38,11 +38,9 @@ const createBooking = catchAsync(async (req, res) => {
 
     const diff = diffTime(startTime, endTime)
     const mappedDiff = diff[0] - diff[1]
-    console.log(mappedDiff, 'from diff');
 
     // Retrieve payable amount
     const currPayableAmount = mappedDiff * pricePerHour
-    console.log(currPayableAmount);
 
 
     const result = await BookingServices.createBookingIntoDB({
@@ -66,6 +64,16 @@ const createBooking = catchAsync(async (req, res) => {
 const getAllBookings = catchAsync(async (req, res) => {
     const result = await BookingServices.getAllBookingsFromDB();
 
+    // Check if the database collection is empty or no matching data is found
+    if (!result || result.length === 0) {
+        return sendResponse(res, {
+            success: false,
+            statusCode: httpStatus.NOT_FOUND,
+            message: 'No data found.',
+            data: [],
+        });
+    }
+
     sendResponse(res, {
         success: true,
         statusCode: httpStatus.OK,
@@ -76,9 +84,18 @@ const getAllBookings = catchAsync(async (req, res) => {
 
 const getBookingsByUser = catchAsync(async (req, res) => {
     const userId = req.user?.userId?._id
+
     const result = await BookingServices.getBookingsByUserFromDB(userId);
 
-
+    // Check if the database collection is empty or no matching data is found
+    if (!result || result.length === 0) {
+        return sendResponse(res, {
+            success: false,
+            statusCode: httpStatus.NOT_FOUND,
+            message: 'No data found.',
+            data: [],
+        });
+    }
 
     sendResponse(res, {
         success: true,

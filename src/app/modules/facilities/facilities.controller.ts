@@ -7,7 +7,6 @@ import { FacilityServices } from "./facilities.service";
 const createFacility = catchAsync(async (req, res) => {
 
     const result = await FacilityServices.createFacilityIntoDB(req.body);
-    console.log(req.user, 'from create facility');
 
     sendResponse(res, {
         success: true,
@@ -19,6 +18,16 @@ const createFacility = catchAsync(async (req, res) => {
 
 const getAllFacilities = catchAsync(async (req, res) => {
     const result = await FacilityServices.getAllFacilitiesFromDB();
+
+    // Check if the database collection is empty or no matching data is found
+    if (!result || result.length === 0) {
+        return sendResponse(res, {
+            success: false,
+            statusCode: httpStatus.NOT_FOUND,
+            message: 'No data found.',
+            data: [],
+        });
+    }
 
     sendResponse(res, {
         success: true,

@@ -16,16 +16,18 @@ router.post(
 );
 
 router.get(
+    '/user',
+    auth('user'),
+    BookingControllers.getBookingsByUser,
+);
+
+router.get(
     '/',
     auth('admin'),
     BookingControllers.getAllBookings,
 );
 
-router.get(
-    '/user',
-    auth('user'),
-    BookingControllers.getBookingsByUser,
-);
+
 
 router.delete(
     '/:id',

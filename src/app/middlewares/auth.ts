@@ -7,6 +7,7 @@ import catchAsync from '../utils/catchAsync';
 import { TUserRole } from '../modules/user/user.interface';
 import AppError from '../errors/AppError';
 import { User } from '../modules/user/user.model';
+import sendResponse from '../utils/sendResponse';
 
 const auth = (...requiredRoles: TUserRole[]) => {
     return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
@@ -14,7 +15,13 @@ const auth = (...requiredRoles: TUserRole[]) => {
 
         // checking if the token is missing
         if (!token) {
-            throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized!');
+            // throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized!');
+            return sendResponse(res, {
+                success: false,
+                statusCode: httpStatus.UNAUTHORIZED,
+                message: 'You have no access to this route',
+                // data: [],
+            });
         }
 
         // checking if the given token is valid
@@ -24,7 +31,6 @@ const auth = (...requiredRoles: TUserRole[]) => {
         ) as JwtPayload;
 
         const { role, userId, iat } = decoded;
-        console.log(userId);
 
         // checking if the user is exist
         const user = await User.isUserExistsByEmail(userId.email);
@@ -45,10 +51,16 @@ const auth = (...requiredRoles: TUserRole[]) => {
         // }
 
         if (requiredRoles && !requiredRoles.includes(role)) {
-            throw new AppError(
-                httpStatus.UNAUTHORIZED,
-                'You are not authorized  hi!',
-            );
+            // throw new AppError(
+            //     httpStatus.UNAUTHORIZED,
+            //     'You are not authorized  hi!',
+            // );
+            sendResponse(res, {
+                success: false,
+                statusCode: httpStatus.UNAUTHORIZED,
+                message: 'You have no access to this route',
+                // data: [],
+            });
         }
 
         // req.user = decoded;
