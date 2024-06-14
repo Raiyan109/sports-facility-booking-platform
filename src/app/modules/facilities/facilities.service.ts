@@ -33,7 +33,7 @@ const updateFacilityIntoDB = async (id: string, payload: Partial<TFacility>) => 
             throw new AppError(httpStatus.BAD_REQUEST, 'Failed to update facility');
         }
 
-        return updateFacilityIntoDB;
+        return updatedFacilityInfo;
     } catch (err) {
         console.log(err);
 
