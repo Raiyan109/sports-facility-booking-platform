@@ -11,7 +11,7 @@ export type TBooking = {
 }
 
 export type TSchedule = {
-    date: string;
+    date?: string;
     startTime: string;
     endTime: string;
 };
