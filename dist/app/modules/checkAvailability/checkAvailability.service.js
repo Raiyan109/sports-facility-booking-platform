@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CheckAvailabilityServices = void 0;
 const booking_model_1 = require("../booking/booking.model");
 const checkAvailabilityIntoDB = (query) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield booking_model_1.BookingModel.find(query).select('startTime endTime');
+    const result = yield booking_model_1.BookingModel.find(query).select('startTime endTime -_id');
     return result;
 });
 exports.CheckAvailabilityServices = {

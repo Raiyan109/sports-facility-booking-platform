@@ -39,13 +39,32 @@ const checkAvailability = (0, catchAsync_1.default)((req, res) => __awaiter(void
             data: [],
         });
     }
+    const totalAvailableTime = [
+        { startTime: "08:00", endTime: "18:00" }
+    ];
+    const availableTimeSlots = findAvailableTimeSlots(totalAvailableTime, result);
     (0, sendResponse_1.default)(res, {
         success: true,
         statusCode: http_status_1.default.OK,
         message: 'Availability checked successfully',
-        data: result,
+        data: availableTimeSlots,
     });
 }));
+const findAvailableTimeSlots = (totalAvailableTime, bookings) => {
+    const availableSlots = [];
+    let start = "08:00";
+    for (let i = 0; i < bookings.length; i++) {
+        const { startTime, endTime } = bookings[i];
+        if (start < startTime) {
+            availableSlots.push({ startTime: start, endTime: startTime });
+        }
+        start = endTime;
+    }
+    if (start < "18:00") {
+        availableSlots.push({ startTime: start, endTime: "18:00" });
+    }
+    return availableSlots;
+};
 exports.CheckAvailabilityControllers = {
     checkAvailability
 };

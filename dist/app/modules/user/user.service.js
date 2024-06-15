@@ -20,7 +20,7 @@ const user_model_1 = require("./user.model");
 const user_utils_1 = require("./user.utils");
 const createUserIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield user_model_1.User.create(payload);
+        let user = yield user_model_1.User.create(payload);
         return user;
     }
     catch (error) {

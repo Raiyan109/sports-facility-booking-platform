@@ -27,7 +27,7 @@ const userSchema = new mongoose_1.Schema({
     password: {
         type: String,
         required: true,
-        select: 0
+        select: false
     },
     role: {
         type: String,
@@ -41,6 +41,13 @@ const userSchema = new mongoose_1.Schema({
         type: String,
         required: true
     },
+}, {
+    toJSON: {
+        transform: function (doc, ret) {
+            delete ret.password; // Remove password field when converting to JSON
+            return ret;
+        }
+    }
 });
 userSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function* () {
