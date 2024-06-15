@@ -4,7 +4,7 @@ import { TSchedule } from "../booking/booking.interface";
 
 const checkAvailabilityIntoDB = async (query: FilterQuery<TSchedule>) => {
 
-    const result = await BookingModel.find(query).select('startTime endTime')
+    const result = await BookingModel.find(query).select('startTime endTime -_id')
     return result
 };
 

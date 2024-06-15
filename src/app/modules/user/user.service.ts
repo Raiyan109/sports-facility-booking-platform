@@ -7,7 +7,8 @@ import { createToken } from './user.utils'
 
 const createUserIntoDB = async (payload: TUser) => {
     try {
-        const user = await User.create(payload)
+        let user = await User.create(payload)
+
         return user
     } catch (error) {
         console.log(error);

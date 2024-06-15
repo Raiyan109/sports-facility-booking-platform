@@ -18,6 +18,8 @@ const checkAvailability = catchAsync(async (req, res) => {
     }
 
     const result = await CheckAvailabilityServices.checkAvailabilityIntoDB(query);
+    console.log(result);
+
 
     // Check if the database collection is empty or no matching data is found
     if (!result || result.length === 0) {
