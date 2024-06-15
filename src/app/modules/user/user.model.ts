@@ -14,7 +14,7 @@ const userSchema = new Schema<TUser, UserModel>({
     password: {
         type: String,
         required: true,
-        select: 0
+        select: false
     },
     role: {
         type: String,
@@ -28,6 +28,13 @@ const userSchema = new Schema<TUser, UserModel>({
         type: String,
         required: true
     },
+}, {
+    toJSON: {
+        transform: function (doc, ret) {
+            delete ret.password; // Remove password field when converting to JSON
+            return ret;
+        }
+    }
 })
 
 userSchema.pre('save', async function (next) {
