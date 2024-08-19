@@ -13,5 +13,7 @@ const router = express_1.default.Router();
 router.post('/', (0, auth_1.default)('admin'), (0, validateRequest_1.default)(facilities_validation_1.FacilityValidations.createFacilityValidationSchema), facilities_controller_1.FacilityControllers.createFacility);
 router.put('/:id', (0, auth_1.default)('admin'), (0, validateRequest_1.default)(facilities_validation_1.FacilityValidations.updateFacilityValidationSchema), facilities_controller_1.FacilityControllers.updateFacility);
 router.delete('/:id', (0, auth_1.default)('admin'), facilities_controller_1.FacilityControllers.deleteFacility);
-router.get('/', (0, auth_1.default)('user', 'admin'), facilities_controller_1.FacilityControllers.getAllFacilities);
+router.get('/', 
+// auth('user', 'admin'),
+facilities_controller_1.FacilityControllers.getAllFacilities);
 exports.FacilityRoutes = router;

@@ -25,7 +25,7 @@ router.delete('/:id', auth('admin'), FacilityControllers.deleteFacility);
 
 router.get(
     '/',
-    auth('user', 'admin'),
+    // auth('user', 'admin'),
     FacilityControllers.getAllFacilities,
 );
 
