@@ -28,6 +28,10 @@ const getAllFacilitiesFromDB = () => __awaiter(void 0, void 0, void 0, function*
     const result = yield facilities_model_1.FacilityModel.find();
     return result;
 });
+const getSingleFacilityFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield facilities_model_1.FacilityModel.findById(id);
+    return result;
+});
 const updateFacilityIntoDB = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const updatedFacilityInfo = yield facilities_model_1.FacilityModel.findByIdAndUpdate(id, payload, {
@@ -53,6 +57,7 @@ const deleteFacilityFromDB = (id) => __awaiter(void 0, void 0, void 0, function*
 exports.FacilityServices = {
     createFacilityIntoDB,
     getAllFacilitiesFromDB,
+    getSingleFacilityFromDB,
     updateFacilityIntoDB,
     deleteFacilityFromDB
 };
