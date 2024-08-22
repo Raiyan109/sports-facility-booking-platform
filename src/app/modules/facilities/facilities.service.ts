@@ -17,6 +17,11 @@ const getAllFacilitiesFromDB = async () => {
     return result;
 };
 
+const getSingleFacilityFromDB = async (id: string) => {
+    const result = await FacilityModel.findById(id)
+    return result
+}
+
 const updateFacilityIntoDB = async (id: string, payload: Partial<TFacility>) => {
     try {
         const updatedFacilityInfo = await FacilityModel.findByIdAndUpdate(
@@ -54,6 +59,7 @@ const deleteFacilityFromDB = async (id: string) => {
 export const FacilityServices = {
     createFacilityIntoDB,
     getAllFacilitiesFromDB,
+    getSingleFacilityFromDB,
     updateFacilityIntoDB,
     deleteFacilityFromDB
 }

@@ -24,6 +24,12 @@ router.put(
 router.delete('/:id', auth('admin'), FacilityControllers.deleteFacility);
 
 router.get(
+    '/:id',
+    // auth('user', 'admin'),
+    FacilityControllers.getSingleFacility,
+);
+
+router.get(
     '/',
     // auth('user', 'admin'),
     FacilityControllers.getAllFacilities,
