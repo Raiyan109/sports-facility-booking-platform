@@ -83,6 +83,16 @@ const getAllBookings = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
         data: result,
     });
 }));
+const getSingleBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const result = yield booking_service_1.BookingServices.getSingleBookingFromDB(id);
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        statusCode: http_status_1.default.OK,
+        message: 'Single Booking retrieved successfully',
+        data: result,
+    });
+}));
 const getBookingsByUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _c, _d;
     const userId = (_d = (_c = req.user) === null || _c === void 0 ? void 0 : _c.userId) === null || _d === void 0 ? void 0 : _d._id;
@@ -116,6 +126,7 @@ const cancelBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
 exports.BookingControllers = {
     createBooking,
     getAllBookings,
+    getSingleBooking,
     getBookingsByUser,
     cancelBooking
 };

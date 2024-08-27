@@ -36,6 +36,11 @@ const getAllBookingsFromDB = async () => {
     return result;
 };
 
+const getSingleBookingFromDB = async (id: string) => {
+    const result = await BookingModel.findById(id).populate('user').populate('facility')
+    return result
+}
+
 const getBookingsByUserFromDB = async (userId: string) => {
 
     const result = await BookingModel.find({ user: userId }).populate('facility')
@@ -59,6 +64,7 @@ const cancelBooking = async (id: string) => {
 export const BookingServices = {
     createBookingIntoDB,
     getAllBookingsFromDB,
+    getSingleBookingFromDB,
     getBookingsByUserFromDB,
     cancelBooking
 }

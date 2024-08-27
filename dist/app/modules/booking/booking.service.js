@@ -40,6 +40,10 @@ const getAllBookingsFromDB = () => __awaiter(void 0, void 0, void 0, function* (
     const result = yield booking_model_1.BookingModel.find().populate('user').populate('facility');
     return result;
 });
+const getSingleBookingFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield booking_model_1.BookingModel.findById(id).populate('user').populate('facility');
+    return result;
+});
 const getBookingsByUserFromDB = (userId) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield booking_model_1.BookingModel.find({ user: userId }).populate('facility');
     return result;
@@ -53,6 +57,7 @@ const cancelBooking = (id) => __awaiter(void 0, void 0, void 0, function* () {
 exports.BookingServices = {
     createBookingIntoDB,
     getAllBookingsFromDB,
+    getSingleBookingFromDB,
     getBookingsByUserFromDB,
     cancelBooking
 };
