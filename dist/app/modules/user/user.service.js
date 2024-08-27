@@ -54,8 +54,7 @@ const login = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     };
 });
 const getUserFromDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield user_model_1.User.findOne(payload);
-    console.log(user);
+    const user = yield user_model_1.User.findOne({ _id: payload });
     return user;
 });
 exports.UserServices = {

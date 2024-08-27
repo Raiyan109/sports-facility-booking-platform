@@ -53,10 +53,7 @@ const login = async (payload: TLoginUser) => {
 };
 
 const getUserFromDB = async (payload: TUser) => {
-
-    const user = await User.findOne(payload)
-    console.log(user);
-
+    const user = await User.findOne({ _id: payload })
     return user
 };
 export const UserServices = {
