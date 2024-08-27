@@ -98,6 +98,7 @@ const getBookingsByUser = catchAsync(async (req, res) => {
 
     const result = await BookingServices.getBookingsByUserFromDB(userId);
 
+
     // Check if the database collection is empty or no matching data is found
     if (!result || result.length === 0) {
         return sendResponse(res, {

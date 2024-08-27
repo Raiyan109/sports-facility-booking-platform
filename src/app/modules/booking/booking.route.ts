@@ -16,16 +16,18 @@ router.post(
 );
 
 router.get(
+    '/user',
+    auth('user'),
+    BookingControllers.getBookingsByUser,
+);
+
+router.get(
     '/:id',
     // auth('user', 'admin'),
     BookingControllers.getSingleBooking,
 );
 
-router.get(
-    '/user',
-    auth('user'),
-    BookingControllers.getBookingsByUser,
-);
+
 
 router.get(
     '/',
