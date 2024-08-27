@@ -18,6 +18,6 @@ router.post(
     UserControllers.loginUser,
 );
 
-
+router.get('/user', UserControllers.getUser)
 
 export const UserRoutes = router;

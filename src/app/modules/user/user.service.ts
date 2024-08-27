@@ -51,7 +51,16 @@ const login = async (payload: TLoginUser) => {
         //   refreshToken,
     };
 };
+
+const getUserFromDB = async (payload: TUser) => {
+
+    const user = await User.findOne(payload)
+    console.log(user);
+
+    return user
+};
 export const UserServices = {
     createUserIntoDB,
-    login
+    login,
+    getUserFromDB
 }
