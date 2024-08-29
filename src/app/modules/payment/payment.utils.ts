@@ -6,26 +6,26 @@ dotenv.config()
 
 
 
-export const initialPayment = async () => {
+export const initialPayment = async (paymentData: any) => {
     const response = await axios.post(process.env.PAYMENT_URL!, {
         store_id: process.env.STORE_ID,
         signature_key: process.env.SIGNATURE_KEY,
-        tran_id: "raiyan-109",
+        tran_id: paymentData.transactionId,
         success_url: "http://www.merchantdomain.com/suc esspage.html",
         fail_url: "http://www.merchantdomain.com/faile dpage.html",
         cancel_url: "http://www.merchantdomain.com/can cellpage.html",
-        amount: "10.0",
+        amount: paymentData.payableAmount,
         currency: "BDT",
         desc: "Merchant Registration Payment",
-        cus_name: "Name",
-        cus_email: "payer@merchantcusomter.com",
-        cus_add1: "House B-158 Road 22",
-        cus_add2: "Mohakhali DOHS",
-        cus_city: "Dhaka",
-        cus_state: "Dhaka",
-        cus_postcode: "1206",
-        cus_country: "Bangladesh",
-        cus_phone: "+8801704",
+        cus_name: paymentData.customerName,
+        cus_email: paymentData.customerEmail,
+        cus_add1: paymentData.customerAddress,
+        cus_add2: "N/A",
+        cus_city: "N/A",
+        cus_state: "N/A",
+        cus_postcode: "N/A",
+        cus_country: "N/A",
+        cus_phone: paymentData.customerPhone,
         type: "json"
     })
     console.log(response);

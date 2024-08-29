@@ -4,6 +4,7 @@ import { TBooking } from "./booking.interface";
 import { BookingModel } from "./booking.model";
 import { hasTimeConflict } from "./booking.utils";
 import { initialPayment } from "../payment/payment.utils";
+import { User } from "../user/user.model";
 
 
 const createBookingIntoDB = async (booking: TBooking) => {
@@ -12,6 +13,8 @@ const createBookingIntoDB = async (booking: TBooking) => {
     //     throw new AppError(httpStatus.CONFLICT, 'This facility is already exists!');
     // }
     const { date, endTime, facility, isBooked, startTime, user, payableAmount } = booking
+
+    const userInfo = await User.findById(user)
 
     const timeSchedules = await BookingModel.find({
         facility,
@@ -30,7 +33,19 @@ const createBookingIntoDB = async (booking: TBooking) => {
     const result = await BookingModel.create(booking)
 
     // payment 
-    const paymentSession = await initialPayment()
+    const transactionId = `TXN-${Date.now()}`;
+    let paymentData;
+    if (userInfo) {
+        paymentData = {
+            transactionId,
+            payableAmount,
+            customerName: userInfo.name,
+            customerEmail: userInfo.email,
+            customerPhone: userInfo.phone,
+            customerAddress: userInfo.address,
+        }
+    }
+    const paymentSession = await initialPayment(paymentData)
     console.log(paymentSession);
 
 
