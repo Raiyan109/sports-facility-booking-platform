@@ -49,7 +49,8 @@ const createBookingIntoDB = async (booking: TBooking) => {
     console.log(paymentSession);
 
 
-    return result
+    // return result
+    return paymentSession
 }
 
 const getAllBookingsFromDB = async () => {
