@@ -6,13 +6,18 @@ import { TSchedule } from "../booking/booking.interface";
 
 
 const checkAvailability = catchAsync(async (req, res) => {
-    const search = req.query.date as string || ''
+    const searchByDate = req.query.date as string || ''
+    const searchByFacility = req.query.facility as string || ''
     const query = {
-        date: search
+        date: searchByDate,
+        facility: searchByFacility
     }
+    console.log(query);
+
     const todayDate = new Date().getDate()
-    if (search !== '') {
-        query.date = search
+    if (searchByDate !== '' && searchByFacility !== '') {
+        query.date = searchByDate
+        query.facility = searchByFacility
     }
     else {
         query.date = todayDate.toString()

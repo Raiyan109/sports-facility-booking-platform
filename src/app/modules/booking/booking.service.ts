@@ -3,6 +3,7 @@ import AppError from "../../errors/AppError";
 import { TBooking } from "./booking.interface";
 import { BookingModel } from "./booking.model";
 import { hasTimeConflict } from "./booking.utils";
+import { initialPayment } from "../payment/payment.utils";
 
 
 const createBookingIntoDB = async (booking: TBooking) => {
@@ -27,8 +28,13 @@ const createBookingIntoDB = async (booking: TBooking) => {
     }
 
     const result = await BookingModel.create(booking)
+
+    // payment 
+    const paymentSession = await initialPayment()
+    console.log(paymentSession);
+
+
     return result
-    // return null
 }
 
 const getAllBookingsFromDB = async () => {
