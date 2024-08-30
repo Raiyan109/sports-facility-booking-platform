@@ -9,6 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const cors_1 = __importDefault(require("cors"));
 const express_1 = __importDefault(require("express"));
+const path_1 = __importDefault(require("path"));
 const routes_1 = __importDefault(require("./app/routes"));
 const globalErrorhandler_1 = __importDefault(require("./app/middlewares/globalErrorhandler"));
 const notFound_1 = __importDefault(require("./app/middlewares/notFound"));
@@ -16,6 +17,7 @@ const app = (0, express_1.default)();
 //parsers
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
+app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
 // application routes
 app.use('/api', routes_1.default);
 const test = (req, res) => {
