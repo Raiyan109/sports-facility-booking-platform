@@ -17,12 +17,15 @@ const http_status_1 = __importDefault(require("http-status"));
 const AppError_1 = __importDefault(require("../../errors/AppError"));
 const booking_model_1 = require("./booking.model");
 const booking_utils_1 = require("./booking.utils");
+const payment_utils_1 = require("../payment/payment.utils");
+const user_model_1 = require("../user/user.model");
 const createBookingIntoDB = (booking) => __awaiter(void 0, void 0, void 0, function* () {
     // const isFacilityExists = await BookingModel.findOne({ booking })
     // if (isFacilityExists) {
     //     throw new AppError(httpStatus.CONFLICT, 'This facility is already exists!');
     // }
     const { date, endTime, facility, isBooked, startTime, user, payableAmount } = booking;
+    const userInfo = yield user_model_1.User.findById(user);
     const timeSchedules = yield booking_model_1.BookingModel.find({
         facility,
         user,
@@ -32,9 +35,38 @@ const createBookingIntoDB = (booking) => __awaiter(void 0, void 0, void 0, funct
     if ((0, booking_utils_1.hasTimeConflict)(timeSchedules, newTimeSchedule)) {
         throw new AppError_1.default(http_status_1.default.CONFLICT, `This facility is not available to book at that time ! Choose other time or date`);
     }
-    const result = yield booking_model_1.BookingModel.create(booking);
-    return result;
-    // return null
+    const transactionId = `TXN-${Date.now()}`;
+    const result = yield booking_model_1.BookingModel.create({
+        date,
+        startTime,
+        endTime,
+        user,
+        facility,
+        payableAmount,
+        isBooked,
+        status: 'Pending',
+        paymentStatus: 'Pending',
+        transactionId
+    });
+    // payment 
+    let paymentData;
+    if (userInfo) {
+        paymentData = {
+            transactionId,
+            payableAmount,
+            customerName: userInfo.name,
+            customerEmail: userInfo.email,
+            customerPhone: userInfo.phone,
+            customerAddress: userInfo.address,
+        };
+    }
+    const paymentSession = yield (0, payment_utils_1.initialPayment)(paymentData);
+    console.log(paymentSession);
+    // return result
+    return {
+        booking: result,
+        paymentSession
+    };
 });
 const getAllBookingsFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield booking_model_1.BookingModel.find().populate('user').populate('facility');

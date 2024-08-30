@@ -16,6 +16,7 @@ const createBookingIntoDB = async (booking: TBooking) => {
 
     const userInfo = await User.findById(user)
 
+
     const timeSchedules = await BookingModel.find({
         facility,
         user,
@@ -30,10 +31,23 @@ const createBookingIntoDB = async (booking: TBooking) => {
         );
     }
 
-    const result = await BookingModel.create(booking)
+
+    const transactionId = `TXN-${Date.now()}`;
+    const result = await BookingModel.create({
+        date,
+        startTime,
+        endTime,
+        user,
+        facility,
+        payableAmount,
+        isBooked,
+        status: 'Pending',
+        paymentStatus: 'Pending',
+        transactionId
+    })
 
     // payment 
-    const transactionId = `TXN-${Date.now()}`;
+
     let paymentData;
     if (userInfo) {
         paymentData = {
@@ -50,7 +64,10 @@ const createBookingIntoDB = async (booking: TBooking) => {
 
 
     // return result
-    return paymentSession
+    return {
+        booking: result,
+        paymentSession
+    }
 }
 
 const getAllBookingsFromDB = async () => {

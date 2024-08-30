@@ -18,13 +18,17 @@ const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../utils/sendResponse"));
 const checkAvailability_service_1 = require("./checkAvailability.service");
 const checkAvailability = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const search = req.query.date || '';
+    const searchByDate = req.query.date || '';
+    const searchByFacility = req.query.facility || '';
     const query = {
-        date: search
+        date: searchByDate,
+        facility: searchByFacility
     };
+    console.log(query);
     const todayDate = new Date().getDate();
-    if (search !== '') {
-        query.date = search;
+    if (searchByDate !== '' && searchByFacility !== '') {
+        query.date = searchByDate;
+        query.facility = searchByFacility;
     }
     else {
         query.date = todayDate.toString();

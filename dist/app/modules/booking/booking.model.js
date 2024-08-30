@@ -35,6 +35,20 @@ const bookingSchema = new mongoose_1.Schema({
         enum: ['confirmed', 'unconfirmed', 'canceled'],
         default: 'confirmed',
         // required: true
-    }
+    },
+    status: {
+        type: String,
+        enum: ['Pending', 'Paid', 'Shipped', 'Completed', 'Cancelled'],
+        default: 'Pending'
+    },
+    paymentStatus: {
+        type: String,
+        enum: ['Pending', 'Paid', 'Failed'],
+        default: 'Pending'
+    },
+    transactionId: {
+        type: String,
+        required: true
+    },
 });
 exports.BookingModel = (0, mongoose_1.model)('Booking', bookingSchema);

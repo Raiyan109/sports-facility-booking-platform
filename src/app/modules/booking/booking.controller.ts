@@ -8,6 +8,7 @@ import { FacilityModel } from "../facilities/facilities.model";
 
 const createBooking = catchAsync(async (req, res) => {
     const { date, startTime, endTime, user, facility, payableAmount, isBooked } = req.body;
+    // const {transactionId, status} = req.query
 
     // Get the price of current facility
     const facilityPrice = await FacilityModel.findById(facility)
@@ -42,7 +43,7 @@ const createBooking = catchAsync(async (req, res) => {
     // Retrieve payable amount
     const currPayableAmount = mappedDiff * pricePerHour
 
-
+    const transactionId = `TXN-${Date.now()}`;
     const result = await BookingServices.createBookingIntoDB({
         date,
         startTime,
@@ -50,7 +51,10 @@ const createBooking = catchAsync(async (req, res) => {
         user: req.user?.userId?._id,
         facility,
         payableAmount: currPayableAmount,
-        isBooked
+        isBooked,
+        status: 'Pending',
+        paymentStatus: 'Pending',
+        transactionId
     });
 
     sendResponse(res, {

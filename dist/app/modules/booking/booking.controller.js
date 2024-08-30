@@ -21,6 +21,7 @@ const facilities_model_1 = require("../facilities/facilities.model");
 const createBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
     const { date, startTime, endTime, user, facility, payableAmount, isBooked } = req.body;
+    // const {transactionId, status} = req.query
     // Get the price of current facility
     const facilityPrice = yield facilities_model_1.FacilityModel.findById(facility);
     const pricePerHour = facilityPrice === null || facilityPrice === void 0 ? void 0 : facilityPrice.pricePerHour;
@@ -49,6 +50,7 @@ const createBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
     const mappedDiff = diff[0] - diff[1];
     // Retrieve payable amount
     const currPayableAmount = mappedDiff * pricePerHour;
+    const transactionId = `TXN-${Date.now()}`;
     const result = yield booking_service_1.BookingServices.createBookingIntoDB({
         date,
         startTime,
@@ -56,7 +58,10 @@ const createBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
         user: (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.userId) === null || _b === void 0 ? void 0 : _b._id,
         facility,
         payableAmount: currPayableAmount,
-        isBooked
+        isBooked,
+        status: 'Pending',
+        paymentStatus: 'Pending',
+        transactionId
     });
     (0, sendResponse_1.default)(res, {
         success: true,
