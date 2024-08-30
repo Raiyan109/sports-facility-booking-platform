@@ -2,6 +2,7 @@ import { TSchedule } from "./booking.interface";
 
 export const hasTimeConflict = (timeSchedules: TSchedule[], newTimeSchedule: TSchedule) => {
     for (const schedule of timeSchedules) {
+
         const existingStartTime = new Date(`${schedule.date}T${schedule.startTime}`);
         const existingEndTime = new Date(`${schedule.date}T${schedule.endTime}`);
         const newStartTime = new Date(`${newTimeSchedule.date}T${newTimeSchedule.startTime}`);
@@ -13,6 +14,7 @@ export const hasTimeConflict = (timeSchedules: TSchedule[], newTimeSchedule: TSc
             return true;
         }
     }
+
 
     return false;
 }
