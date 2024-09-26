@@ -24,9 +24,6 @@ const checkAvailability = catchAsync(async (req, res) => {
     }
 
     const result = await CheckAvailabilityServices.checkAvailabilityIntoDB(query);
-    console.log(result);
-
-
 
     // Check if the database collection is empty or no matching data is found
     // if (!result || result.length === 0) {
@@ -43,6 +40,8 @@ const checkAvailability = catchAsync(async (req, res) => {
     ];
 
     const availableTimeSlots = findAvailableTimeSlots(totalAvailableTime, result);
+    console.log(availableTimeSlots, 'from check controller');
+
 
     sendResponse(res, {
         success: true,
@@ -53,9 +52,10 @@ const checkAvailability = catchAsync(async (req, res) => {
 });
 
 const findAvailableTimeSlots = (totalAvailableTime: any, bookings: any) => {
+
     const availableSlots = [];
 
-    let start = "08:00";
+    let start = "10:00";
 
     for (let i = 0; i < bookings.length; i++) {
         const { startTime, endTime } = bookings[i];

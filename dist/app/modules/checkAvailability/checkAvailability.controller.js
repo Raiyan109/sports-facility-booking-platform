@@ -33,7 +33,6 @@ const checkAvailability = (0, catchAsync_1.default)((req, res) => __awaiter(void
         query.date = todayDate.toString();
     }
     const result = yield checkAvailability_service_1.CheckAvailabilityServices.checkAvailabilityIntoDB(query);
-    console.log(result);
     // Check if the database collection is empty or no matching data is found
     // if (!result || result.length === 0) {
     //     return sendResponse(res, {
@@ -47,6 +46,7 @@ const checkAvailability = (0, catchAsync_1.default)((req, res) => __awaiter(void
         { startTime: "08:00", endTime: "18:00" }
     ];
     const availableTimeSlots = findAvailableTimeSlots(totalAvailableTime, result);
+    console.log(availableTimeSlots, 'from check controller');
     (0, sendResponse_1.default)(res, {
         success: true,
         statusCode: http_status_1.default.OK,
@@ -56,7 +56,7 @@ const checkAvailability = (0, catchAsync_1.default)((req, res) => __awaiter(void
 }));
 const findAvailableTimeSlots = (totalAvailableTime, bookings) => {
     const availableSlots = [];
-    let start = "08:00";
+    let start = "10:00";
     for (let i = 0; i < bookings.length; i++) {
         const { startTime, endTime } = bookings[i];
         if (start < startTime) {

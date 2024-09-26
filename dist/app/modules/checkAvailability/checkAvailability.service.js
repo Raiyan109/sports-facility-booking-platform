@@ -12,7 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CheckAvailabilityServices = void 0;
 const booking_model_1 = require("../booking/booking.model");
 const checkAvailabilityIntoDB = (query) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield booking_model_1.BookingModel.find(query).select('startTime endTime -_id');
+    const result = yield booking_model_1.BookingModel.find(Object.assign(Object.assign({}, query), { isBooked: { $ne: 'canceled' } })).select('startTime endTime isBooked -_id');
+    console.log(result, 'from service');
     return result;
 });
 exports.CheckAvailabilityServices = {

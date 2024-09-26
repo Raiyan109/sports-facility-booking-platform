@@ -20,7 +20,8 @@ const createBookingIntoDB = async (booking: TBooking) => {
     const timeSchedules = await BookingModel.find({
         facility,
         user,
-        date: { $in: date }
+        date: { $in: date },
+        isBooked: { $ne: 'canceled' }
     }).select('date startTime endTime')
 
     const newTimeSchedule = { date, startTime, endTime }

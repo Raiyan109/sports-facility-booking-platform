@@ -29,7 +29,8 @@ const createBookingIntoDB = (booking) => __awaiter(void 0, void 0, void 0, funct
     const timeSchedules = yield booking_model_1.BookingModel.find({
         facility,
         user,
-        date: { $in: date }
+        date: { $in: date },
+        isBooked: { $ne: 'canceled' }
     }).select('date startTime endTime');
     const newTimeSchedule = { date, startTime, endTime };
     if ((0, booking_utils_1.hasTimeConflict)(timeSchedules, newTimeSchedule)) {

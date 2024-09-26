@@ -18,6 +18,9 @@ const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
+// Set EJS as the template engine
+app.set('view engine', 'ejs');
+app.set('views', path_1.default.join(__dirname, 'views'));
 // application routes
 app.use('/api', routes_1.default);
 const test = (req, res) => {

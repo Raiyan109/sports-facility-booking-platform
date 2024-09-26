@@ -19,18 +19,20 @@ const createBookingValidationSchema = z.object({
         facility: z.string(),
         payableAmount: z.number().optional(),
         isBooked: z.enum(['confirmed', 'unconfirmed', 'canceled']).optional()
-    }).refine((body) => {
-        // startTime : 10:30  => 1970-01-01T10:30
-        //endTime : 12:30  =>  1970-01-01T12:30
-
-        const start = new Date(`1970-01-01T${body.startTime}:00`);
-        const end = new Date(`1970-01-01T${body.endTime}:00`);
-
-        return end > start;
-
-    }, {
-        message: 'Start time should be before End time !  ',
     })
+    // .refine((body) => {
+
+    //     const start = new Date(`1970-01-01T${body.startTime}:00`);
+    //     const end = new Date(`1970-01-01T${body.endTime}:00`);
+
+    //     return end > start;
+
+    // }, {
+    //     message: 'Start time should be before End time !  ',
+    // })
+    // startTime : 10:30  => 1970-01-01T10:30
+    //endTime : 12:30  =>  1970-01-01T12:30
+
 })
 
 export const BookingValidations = {
