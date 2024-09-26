@@ -24,7 +24,6 @@ const checkAvailability = (0, catchAsync_1.default)((req, res) => __awaiter(void
         date: searchByDate,
         facility: searchByFacility
     };
-    console.log(query);
     const todayDate = new Date().getDate();
     if (searchByDate !== '' && searchByFacility !== '') {
         query.date = searchByDate;
@@ -34,15 +33,16 @@ const checkAvailability = (0, catchAsync_1.default)((req, res) => __awaiter(void
         query.date = todayDate.toString();
     }
     const result = yield checkAvailability_service_1.CheckAvailabilityServices.checkAvailabilityIntoDB(query);
+    console.log(result);
     // Check if the database collection is empty or no matching data is found
-    if (!result || result.length === 0) {
-        return (0, sendResponse_1.default)(res, {
-            success: false,
-            statusCode: http_status_1.default.NOT_FOUND,
-            message: 'No data found.',
-            data: [],
-        });
-    }
+    // if (!result || result.length === 0) {
+    //     return sendResponse(res, {
+    //         success: false,
+    //         statusCode: httpStatus.NOT_FOUND,
+    //         message: 'No data found.',
+    //         data: [],
+    //     });
+    // }
     const totalAvailableTime = [
         { startTime: "08:00", endTime: "18:00" }
     ];

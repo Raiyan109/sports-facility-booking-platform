@@ -61,7 +61,6 @@ const createBookingIntoDB = (booking) => __awaiter(void 0, void 0, void 0, funct
         };
     }
     const paymentSession = yield (0, payment_utils_1.initialPayment)(paymentData);
-    console.log(paymentSession);
     // return result
     return {
         booking: result,

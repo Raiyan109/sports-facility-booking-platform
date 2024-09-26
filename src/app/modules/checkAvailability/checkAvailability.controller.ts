@@ -12,7 +12,7 @@ const checkAvailability = catchAsync(async (req, res) => {
         date: searchByDate,
         facility: searchByFacility
     }
-    console.log(query);
+
 
     const todayDate = new Date().getDate()
     if (searchByDate !== '' && searchByFacility !== '') {
@@ -24,18 +24,19 @@ const checkAvailability = catchAsync(async (req, res) => {
     }
 
     const result = await CheckAvailabilityServices.checkAvailabilityIntoDB(query);
+    console.log(result);
 
 
 
     // Check if the database collection is empty or no matching data is found
-    if (!result || result.length === 0) {
-        return sendResponse(res, {
-            success: false,
-            statusCode: httpStatus.NOT_FOUND,
-            message: 'No data found.',
-            data: [],
-        });
-    }
+    // if (!result || result.length === 0) {
+    //     return sendResponse(res, {
+    //         success: false,
+    //         statusCode: httpStatus.NOT_FOUND,
+    //         message: 'No data found.',
+    //         data: [],
+    //     });
+    // }
 
     const totalAvailableTime: TSchedule[] = [
         { startTime: "08:00", endTime: "18:00" }
