@@ -8,12 +8,15 @@ import { BookingControllers } from './booking.controller';
 
 const router = express.Router();
 
+router.get('/bookingTrends', auth('admin'), BookingControllers.getBookingTrends);
+
 router.post(
     '/',
     auth('user'),
     validateRequest(BookingValidations.createBookingValidationSchema),
     BookingControllers.createBooking,
 );
+
 
 router.get(
     '/user',

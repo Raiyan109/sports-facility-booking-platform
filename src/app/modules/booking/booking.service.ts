@@ -87,6 +87,36 @@ const getBookingsByUserFromDB = async (userId: string) => {
     return result;
 };
 
+const getBookingTrendsFromDB = async () => {
+    // Aggregate bookings by month and count them, converting string dates to Date type
+    const bookingData = await BookingModel.aggregate([
+        {
+            $addFields: {
+                dateAsDate: { $toDate: "$date" }  // Convert string to Date type
+            }
+        },
+        {
+            $group: {
+                _id: {
+                    year: { $year: "$dateAsDate" },  // Use the converted Date field
+                    month: { $month: "$dateAsDate" }
+                },
+                bookingCount: { $sum: 1 },
+            },
+        },
+        {
+            $sort: { "_id.year": 1, "_id.month": 1 },
+        },
+    ]);
+
+    console.log(bookingData);
+
+    // Optionally, format the data for output
+    return bookingData.map(data => ({
+        date: `${data._id.year}-${String(data._id.month).padStart(2, '0')}-01`,
+        bookings: data.bookingCount,
+    }));
+};
 
 
 const cancelBooking = async (id: string) => {
@@ -106,5 +136,6 @@ export const BookingServices = {
     getAllBookingsFromDB,
     getSingleBookingFromDB,
     getBookingsByUserFromDB,
-    cancelBooking
+    cancelBooking,
+    getBookingTrendsFromDB
 }

@@ -118,6 +118,15 @@ const getBookingsByUser = (0, catchAsync_1.default)((req, res) => __awaiter(void
         data: result,
     });
 }));
+const getBookingTrends = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield booking_service_1.BookingServices.getBookingTrendsFromDB();
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        statusCode: http_status_1.default.OK,
+        message: 'Booking trends data retrieved successfully',
+        data: result,
+    });
+}));
 const cancelBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const result = yield booking_service_1.BookingServices.cancelBooking(id);
@@ -133,5 +142,6 @@ exports.BookingControllers = {
     getAllBookings,
     getSingleBooking,
     getBookingsByUser,
-    cancelBooking
+    cancelBooking,
+    getBookingTrends
 };

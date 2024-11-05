@@ -121,6 +121,18 @@ const getBookingsByUser = catchAsync(async (req, res) => {
     });
 });
 
+const getBookingTrends = catchAsync(async (req, res) => {
+    const result = await BookingServices.getBookingTrendsFromDB();
+
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: 'Booking trends data retrieved successfully',
+        data: result,
+    });
+});
+
+
 const cancelBooking = catchAsync(async (req, res) => {
     const { id } = req.params;
     const result = await BookingServices.cancelBooking(id);
@@ -138,5 +150,6 @@ export const BookingControllers = {
     getAllBookings,
     getSingleBooking,
     getBookingsByUser,
-    cancelBooking
+    cancelBooking,
+    getBookingTrends
 }
