@@ -39,14 +39,20 @@ const getAverageRatingsFromDB = () => __awaiter(void 0, void 0, void 0, function
             const ratings = (facility === null || facility === void 0 ? void 0 : facility.ratings) || [];
             if (!ratings || (ratings === null || ratings === void 0 ? void 0 : ratings.length) === 0) {
                 // If there are no ratings, return "0" as a string
-                return 0;
+                return {
+                    name: facility.name,
+                    averageRating: "0", // No ratings, so average is 0
+                };
             }
             // Calculate the average rating safely
             const total = ratings.reduce((acc, rating) => {
                 return acc + (rating.rating || 0); // Default rating to 0 if undefined
             }, 0);
             const average = total / (ratings === null || ratings === void 0 ? void 0 : ratings.length);
-            return average > 0 ? parseFloat(average.toFixed(1)) : 0;
+            return {
+                name: facility.name,
+                averageRating: average > 0 ? parseFloat(average.toFixed(1)) : 0
+            };
         });
         // Remove any undefined values in case there are any left
         return allFacilities.filter(rating => rating !== undefined);

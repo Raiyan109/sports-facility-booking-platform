@@ -30,7 +30,10 @@ const getAverageRatingsFromDB = async () => {
             const ratings = facility?.ratings || [];
             if (!ratings || ratings?.length === 0) {
                 // If there are no ratings, return "0" as a string
-                return 0;
+                return {
+                    name: facility.name,
+                    averageRating: "0", // No ratings, so average is 0
+                };
             }
 
             // Calculate the average rating safely
@@ -39,7 +42,10 @@ const getAverageRatingsFromDB = async () => {
             }, 0);
 
             const average = total / ratings?.length;
-            return average > 0 ? parseFloat(average.toFixed(1)) : 0;
+            return {
+                name: facility.name,
+                averageRating: average > 0 ? parseFloat(average.toFixed(1)) : 0
+            };
         });
 
         // Remove any undefined values in case there are any left
