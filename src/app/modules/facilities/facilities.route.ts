@@ -14,6 +14,12 @@ router.post(
     FacilityControllers.createFacility,
 );
 
+router.post(
+    '/:facilityId/rating',
+    auth('user', 'admin'),
+    FacilityControllers.addRating,
+);
+
 router.put(
     '/:id',
     auth('admin'),

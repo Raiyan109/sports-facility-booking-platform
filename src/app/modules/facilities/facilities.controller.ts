@@ -72,10 +72,28 @@ const deleteFacility = catchAsync(async (req, res) => {
     });
 });
 
+const addRating = catchAsync(async (req, res) => {
+    const userId = req.user?.userId?._id
+    const { facilityId } = req.params;
+    const { rating } = req.body
+    console.log(req.body, 'req body from controlller');
+
+
+    const result = await FacilityServices.addRatingIntoFacility(facilityId, userId, rating);
+
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: 'Rating added successfully',
+        data: result,
+    });
+})
+
 export const FacilityControllers = {
     createFacility,
     getAllFacilities,
     getSingleFacility,
     updateFacility,
-    deleteFacility
+    deleteFacility,
+    addRating
 }

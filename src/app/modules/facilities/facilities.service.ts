@@ -55,11 +55,33 @@ const deleteFacilityFromDB = async (id: string) => {
     return result;
 };
 
+const addRatingIntoFacility = async (facilityId: string, userId: string, payload: number) => {
+    const facility = await FacilityModel.findById(facilityId)
+
+    if (!facility) {
+        throw new AppError(httpStatus.FORBIDDEN, 'This facility does not exists!');
+    }
+
+
+    const ratingData = {
+        user: userId,
+        rating: payload,
+    };
+
+    facility.ratings?.push(ratingData)
+
+
+    const result = await facility.save();
+
+    return result;
+};
+
 
 export const FacilityServices = {
     createFacilityIntoDB,
     getAllFacilitiesFromDB,
     getSingleFacilityFromDB,
     updateFacilityIntoDB,
-    deleteFacilityFromDB
+    deleteFacilityFromDB,
+    addRatingIntoFacility
 }

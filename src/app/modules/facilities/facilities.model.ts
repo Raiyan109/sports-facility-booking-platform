@@ -28,7 +28,13 @@ const facilitySchema = new Schema<TFacility>({
         type: Boolean,
         required: true,
         default: false
-    }
+    },
+    ratings: [
+        {
+            user: { type: Schema.Types.ObjectId, ref: 'User' },
+            rating: { type: Number, required: true },
+        }
+    ]
 })
 
 export const FacilityModel = model<TFacility>('Facility', facilitySchema)

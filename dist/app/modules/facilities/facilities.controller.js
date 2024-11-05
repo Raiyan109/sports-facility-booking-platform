@@ -74,10 +74,25 @@ const deleteFacility = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
         data: result,
     });
 }));
+const addRating = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
+    const userId = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.userId) === null || _b === void 0 ? void 0 : _b._id;
+    const { facilityId } = req.params;
+    const { rating } = req.body;
+    console.log(req.body, 'req body from controlller');
+    const result = yield facilities_service_1.FacilityServices.addRatingIntoFacility(facilityId, userId, rating);
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        statusCode: http_status_1.default.OK,
+        message: 'Rating added successfully',
+        data: result,
+    });
+}));
 exports.FacilityControllers = {
     createFacility,
     getAllFacilities,
     getSingleFacility,
     updateFacility,
-    deleteFacility
+    deleteFacility,
+    addRating
 };

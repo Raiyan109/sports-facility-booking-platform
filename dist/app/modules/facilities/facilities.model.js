@@ -29,6 +29,12 @@ const facilitySchema = new mongoose_1.Schema({
         type: Boolean,
         required: true,
         default: false
-    }
+    },
+    ratings: [
+        {
+            user: { type: mongoose_1.Schema.Types.ObjectId, ref: 'User' },
+            rating: { type: Number, required: true },
+        }
+    ]
 });
 exports.FacilityModel = (0, mongoose_1.model)('Facility', facilitySchema);

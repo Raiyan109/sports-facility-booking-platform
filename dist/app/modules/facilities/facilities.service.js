@@ -54,10 +54,25 @@ const deleteFacilityFromDB = (id) => __awaiter(void 0, void 0, void 0, function*
     });
     return result;
 });
+const addRatingIntoFacility = (facilityId, userId, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const facility = yield facilities_model_1.FacilityModel.findById(facilityId);
+    if (!facility) {
+        throw new AppError_1.default(http_status_1.default.FORBIDDEN, 'This facility does not exists!');
+    }
+    const ratingData = {
+        user: userId,
+        rating: payload,
+    };
+    (_a = facility.ratings) === null || _a === void 0 ? void 0 : _a.push(ratingData);
+    const result = yield facility.save();
+    return result;
+});
 exports.FacilityServices = {
     createFacilityIntoDB,
     getAllFacilitiesFromDB,
     getSingleFacilityFromDB,
     updateFacilityIntoDB,
-    deleteFacilityFromDB
+    deleteFacilityFromDB,
+    addRatingIntoFacility
 };
