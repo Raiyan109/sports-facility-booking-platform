@@ -22,6 +22,37 @@ const getSingleFacilityFromDB = async (id: string) => {
     return result
 }
 
+const getAverageRatingsFromDB = async () => {
+    const facilities = await FacilityModel.find();
+
+    const calculateRatingsAverage = () => {
+        const allFacilities = facilities.map((facility) => {
+            const ratings = facility?.ratings || [];
+            if (!ratings || ratings?.length === 0) {
+                // If there are no ratings, return "0" as a string
+                return 0;
+            }
+
+            // Calculate the average rating safely
+            const total = ratings.reduce((acc, rating) => {
+                return acc + (rating.rating || 0); // Default rating to 0 if undefined
+            }, 0);
+
+            const average = total / ratings?.length;
+            return average > 0 ? parseFloat(average.toFixed(1)) : 0;
+        });
+
+        // Remove any undefined values in case there are any left
+        return allFacilities.filter(rating => rating !== undefined);
+    };
+
+    const averageRatings = calculateRatingsAverage();
+    console.log(averageRatings);
+
+    return averageRatings;
+};
+
+
 const updateFacilityIntoDB = async (id: string, payload: Partial<TFacility>) => {
     try {
         const updatedFacilityInfo = await FacilityModel.findByIdAndUpdate(
@@ -83,5 +114,6 @@ export const FacilityServices = {
     getSingleFacilityFromDB,
     updateFacilityIntoDB,
     deleteFacilityFromDB,
-    addRatingIntoFacility
+    addRatingIntoFacility,
+    getAverageRatingsFromDB
 }

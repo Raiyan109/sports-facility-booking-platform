@@ -33,8 +33,11 @@ const facilitySchema = new mongoose_1.Schema({
     ratings: [
         {
             user: { type: mongoose_1.Schema.Types.ObjectId, ref: 'User' },
-            rating: { type: Number, required: true },
+            rating: { type: Number, required: true, default: 0 },
         }
-    ]
+    ],
+    averageRating: {
+        type: Number
+    }
 });
 exports.FacilityModel = (0, mongoose_1.model)('Facility', facilitySchema);

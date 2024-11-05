@@ -32,6 +32,29 @@ const getSingleFacilityFromDB = (id) => __awaiter(void 0, void 0, void 0, functi
     const result = yield facilities_model_1.FacilityModel.findById(id);
     return result;
 });
+const getAverageRatingsFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    const facilities = yield facilities_model_1.FacilityModel.find();
+    const calculateRatingsAverage = () => {
+        const allFacilities = facilities.map((facility) => {
+            const ratings = (facility === null || facility === void 0 ? void 0 : facility.ratings) || [];
+            if (!ratings || (ratings === null || ratings === void 0 ? void 0 : ratings.length) === 0) {
+                // If there are no ratings, return "0" as a string
+                return 0;
+            }
+            // Calculate the average rating safely
+            const total = ratings.reduce((acc, rating) => {
+                return acc + (rating.rating || 0); // Default rating to 0 if undefined
+            }, 0);
+            const average = total / (ratings === null || ratings === void 0 ? void 0 : ratings.length);
+            return average > 0 ? parseFloat(average.toFixed(1)) : 0;
+        });
+        // Remove any undefined values in case there are any left
+        return allFacilities.filter(rating => rating !== undefined);
+    };
+    const averageRatings = calculateRatingsAverage();
+    console.log(averageRatings);
+    return averageRatings;
+});
 const updateFacilityIntoDB = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const updatedFacilityInfo = yield facilities_model_1.FacilityModel.findByIdAndUpdate(id, payload, {
@@ -74,5 +97,6 @@ exports.FacilityServices = {
     getSingleFacilityFromDB,
     updateFacilityIntoDB,
     deleteFacilityFromDB,
-    addRatingIntoFacility
+    addRatingIntoFacility,
+    getAverageRatingsFromDB
 };

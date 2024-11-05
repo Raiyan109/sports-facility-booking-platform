@@ -11,5 +11,6 @@ export type TFacility = {
     location: string;
     isDeleted?: boolean;
     ratings?: [IRating];
+    averageRating?: number;
 }
 

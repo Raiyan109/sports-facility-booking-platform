@@ -14,6 +14,12 @@ router.post(
     FacilityControllers.createFacility,
 );
 
+router.get(
+    '/averageRatings',
+    // auth('user', 'admin'),
+    FacilityControllers.getAverageRatings,
+);
+
 router.post(
     '/:facilityId/rating',
     auth('user', 'admin'),
@@ -35,11 +41,15 @@ router.get(
     FacilityControllers.getSingleFacility,
 );
 
+
+
 router.get(
     '/',
     // auth('user', 'admin'),
     FacilityControllers.getAllFacilities,
 );
+
+
 
 
 

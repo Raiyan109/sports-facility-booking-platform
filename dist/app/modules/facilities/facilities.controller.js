@@ -54,6 +54,15 @@ const getSingleFacility = (0, catchAsync_1.default)((req, res) => __awaiter(void
         data: result,
     });
 }));
+const getAverageRatings = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield facilities_service_1.FacilityServices.getAverageRatingsFromDB();
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        statusCode: http_status_1.default.OK,
+        message: 'Average ratings retrieved successfully',
+        data: result,
+    });
+}));
 const updateFacility = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const result = yield facilities_service_1.FacilityServices.updateFacilityIntoDB(id, req.body);
@@ -94,5 +103,6 @@ exports.FacilityControllers = {
     getSingleFacility,
     updateFacility,
     deleteFacility,
-    addRating
+    addRating,
+    getAverageRatings
 };

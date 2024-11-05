@@ -32,9 +32,12 @@ const facilitySchema = new Schema<TFacility>({
     ratings: [
         {
             user: { type: Schema.Types.ObjectId, ref: 'User' },
-            rating: { type: Number, required: true },
+            rating: { type: Number, required: true, default: 0 },
         }
-    ]
+    ],
+    averageRating: {
+        type: Number
+    }
 })
 
 export const FacilityModel = model<TFacility>('Facility', facilitySchema)
