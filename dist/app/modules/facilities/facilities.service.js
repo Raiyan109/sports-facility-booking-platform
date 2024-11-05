@@ -41,7 +41,7 @@ const getAverageRatingsFromDB = () => __awaiter(void 0, void 0, void 0, function
                 // If there are no ratings, return "0" as a string
                 return {
                     name: facility.name,
-                    averageRating: "0", // No ratings, so average is 0
+                    averageRating: 0, // No ratings, so average is 0
                 };
             }
             // Calculate the average rating safely

@@ -32,7 +32,7 @@ const getAverageRatingsFromDB = async () => {
                 // If there are no ratings, return "0" as a string
                 return {
                     name: facility.name,
-                    averageRating: "0", // No ratings, so average is 0
+                    averageRating: 0, // No ratings, so average is 0
                 };
             }
 
