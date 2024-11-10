@@ -2,6 +2,7 @@ import httpStatus from "http-status";
 import AppError from "../../errors/AppError";
 import { TFacility } from "./facilities.interface"
 import { FacilityModel } from "./facilities.model"
+import { BookingModel } from "../booking/booking.model";
 
 const createFacilityIntoDB = async (facility: TFacility) => {
     const isFacilityExists = await FacilityModel.findOne({ name: facility.name })
@@ -56,6 +57,31 @@ const getAverageRatingsFromDB = async () => {
     console.log(averageRatings);
 
     return averageRatings;
+};
+
+const getPopularFacilitiesFromDB = async () => {
+    // Aggregate bookings by month and count them, converting string dates to Date type
+    const facilityData = await BookingModel.aggregate([
+        {
+            $group: {
+                _id: '$facility',
+                bookingCount: { $sum: 1 },
+            },
+        },
+        {
+            $sort: { bookingCount: -1 } // Sort by the count in descending order
+        }
+
+    ]);
+
+    console.log(facilityData);
+
+    // Optionally, format the data for output
+    // return bookingData.map(data => ({
+    //     date: `${data._id.year}-${String(data._id.month).padStart(2, '0')}-01`,
+    //     bookings: data.bookingCount,
+    // }));
+    return facilityData
 };
 
 
@@ -121,5 +147,6 @@ export const FacilityServices = {
     updateFacilityIntoDB,
     deleteFacilityFromDB,
     addRatingIntoFacility,
-    getAverageRatingsFromDB
+    getAverageRatingsFromDB,
+    getPopularFacilitiesFromDB
 }

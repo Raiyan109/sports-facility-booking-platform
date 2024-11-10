@@ -16,6 +16,7 @@ exports.FacilityServices = void 0;
 const http_status_1 = __importDefault(require("http-status"));
 const AppError_1 = __importDefault(require("../../errors/AppError"));
 const facilities_model_1 = require("./facilities.model");
+const booking_model_1 = require("../booking/booking.model");
 const createFacilityIntoDB = (facility) => __awaiter(void 0, void 0, void 0, function* () {
     const isFacilityExists = yield facilities_model_1.FacilityModel.findOne({ name: facility.name });
     if (isFacilityExists) {
@@ -61,6 +62,27 @@ const getAverageRatingsFromDB = () => __awaiter(void 0, void 0, void 0, function
     console.log(averageRatings);
     return averageRatings;
 });
+const getPopularFacilitiesFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    // Aggregate bookings by month and count them, converting string dates to Date type
+    const facilityData = yield booking_model_1.BookingModel.aggregate([
+        {
+            $group: {
+                _id: '$facility',
+                bookingCount: { $sum: 1 },
+            },
+        },
+        {
+            $sort: { bookingCount: -1 } // Sort by the count in descending order
+        }
+    ]);
+    console.log(facilityData);
+    // Optionally, format the data for output
+    // return bookingData.map(data => ({
+    //     date: `${data._id.year}-${String(data._id.month).padStart(2, '0')}-01`,
+    //     bookings: data.bookingCount,
+    // }));
+    return facilityData;
+});
 const updateFacilityIntoDB = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const updatedFacilityInfo = yield facilities_model_1.FacilityModel.findByIdAndUpdate(id, payload, {
@@ -104,5 +126,6 @@ exports.FacilityServices = {
     updateFacilityIntoDB,
     deleteFacilityFromDB,
     addRatingIntoFacility,
-    getAverageRatingsFromDB
+    getAverageRatingsFromDB,
+    getPopularFacilitiesFromDB
 };

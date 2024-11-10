@@ -20,6 +20,12 @@ router.get(
     FacilityControllers.getAverageRatings,
 );
 
+router.get(
+    '/popular-facilities',
+    // auth('user', 'admin'),
+    FacilityControllers.getPopularFacilities,
+);
+
 router.post(
     '/:facilityId/rating',
     auth('user', 'admin'),

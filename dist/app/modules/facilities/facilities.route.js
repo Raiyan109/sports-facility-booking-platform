@@ -14,6 +14,9 @@ router.post('/', (0, auth_1.default)('admin'), (0, validateRequest_1.default)(fa
 router.get('/averageRatings', 
 // auth('user', 'admin'),
 facilities_controller_1.FacilityControllers.getAverageRatings);
+router.get('/popular-facilities', 
+// auth('user', 'admin'),
+facilities_controller_1.FacilityControllers.getPopularFacilities);
 router.post('/:facilityId/rating', (0, auth_1.default)('user', 'admin'), facilities_controller_1.FacilityControllers.addRating);
 router.put('/:id', (0, auth_1.default)('admin'), (0, validateRequest_1.default)(facilities_validation_1.FacilityValidations.updateFacilityValidationSchema), facilities_controller_1.FacilityControllers.updateFacility);
 router.delete('/:id', (0, auth_1.default)('admin'), facilities_controller_1.FacilityControllers.deleteFacility);

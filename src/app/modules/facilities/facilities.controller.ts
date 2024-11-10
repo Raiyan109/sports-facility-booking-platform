@@ -59,6 +59,17 @@ const getAverageRatings = catchAsync(async (req, res) => {
     });
 })
 
+const getPopularFacilities = catchAsync(async (req, res) => {
+    const result = await FacilityServices.getPopularFacilitiesFromDB();
+
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: 'Popular Facilities data retrieved successfully',
+        data: result,
+    });
+});
+
 const updateFacility = catchAsync(async (req, res) => {
     const { id } = req.params;
     const result = await FacilityServices.updateFacilityIntoDB(id, req.body);
@@ -107,5 +118,6 @@ export const FacilityControllers = {
     updateFacility,
     deleteFacility,
     addRating,
-    getAverageRatings
+    getAverageRatings,
+    getPopularFacilities
 }
